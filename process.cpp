@@ -117,3 +117,13 @@ int Process::getLastTime()
 {
     return lastTime;
 }
+
+int Process::getPriorityQueue()
+{
+    return priorityQueue;
+}
+
+void Process::setPriorityQueue(int queue)
+{
+    priorityQueue = queue;
+}

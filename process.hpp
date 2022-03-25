@@ -36,6 +36,8 @@ public:
     int getTotalBurst();
     int getFirstArrivalTime();
     int getLastTime();
+    int getPriorityQueue();
+    void setPriorityQueue(int queue);
 
 private:
     string name;
@@ -45,6 +47,7 @@ private:
     int totalBurst;
     int firstArrivalTime;
     int lastTime;
+    int priorityQueue = 1;
 };
 
 

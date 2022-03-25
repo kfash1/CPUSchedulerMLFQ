@@ -1,4 +1,4 @@
-//SJF Source Code
+//MLFQ Source Code
 //Kevin Fash
 //Laura Casals
 
@@ -10,7 +10,7 @@ int main()
 {
     int cpuTime = 0;
     
-    cout << "CPU Scheduler Project - SJF" << endl;
+    cout << "CPU Scheduler Project - MLFQ" << endl;
     cout << "Kevin Fash" << endl;
     cout << "Laura Casals" << endl << endl;
     
@@ -47,10 +47,6 @@ int main()
     //Start of SJF algorithm
     
     readyQueue.sortReadyQueue();
-
-    //readyQueue.displayReadyQueue();
-    //ioQueue.displayIOQueue(cpuTime);
-    
     
     //for testing, doing a large loop
     //270 is the exact number we need for everthing to get processed
