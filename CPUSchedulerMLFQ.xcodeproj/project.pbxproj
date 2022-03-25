@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		97CF469427D646BF00288DF3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97CF469327D646BF00288DF3 /* main.cpp */; };
-		97CF469727D6476400288DF3 /* queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97CF469527D6476400288DF3 /* queue.cpp */; };
-		97DD31A327D644C100225D9D /* process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97DD31A127D644C100225D9D /* process.cpp */; };
+		97C3A16F27EDE9E800B5DC7F /* process.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97C3A16927EDE9E800B5DC7F /* process.cpp */; };
+		97C3A17027EDE9E800B5DC7F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97C3A16A27EDE9E800B5DC7F /* main.cpp */; };
+		97C3A17127EDE9E800B5DC7F /* queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 97C3A16E27EDE9E800B5DC7F /* queue.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		97DD319327D566BE00225D9D /* CopyFiles */ = {
+		97C3A15C27EDE91900B5DC7F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -25,17 +25,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		97CF469327D646BF00288DF3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		97CF469527D6476400288DF3 /* queue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = queue.cpp; sourceTree = "<group>"; };
-		97CF469627D6476400288DF3 /* queue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = queue.hpp; sourceTree = "<group>"; };
-		97CF469827E04C7600288DF3 /* Fash_SJF.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fash_SJF.txt; sourceTree = "<group>"; };
-		97DD319527D566BE00225D9D /* CPUScheduler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CPUScheduler; sourceTree = BUILT_PRODUCTS_DIR; };
-		97DD31A127D644C100225D9D /* process.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = process.cpp; sourceTree = "<group>"; };
-		97DD31A227D644C100225D9D /* process.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = process.hpp; sourceTree = "<group>"; };
+		97C3A15E27EDE91A00B5DC7F /* CPUSchedulerMLFQ */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CPUSchedulerMLFQ; sourceTree = BUILT_PRODUCTS_DIR; };
+		97C3A16927EDE9E800B5DC7F /* process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = process.cpp; sourceTree = "<group>"; };
+		97C3A16A27EDE9E800B5DC7F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		97C3A16B27EDE9E800B5DC7F /* process.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = process.hpp; sourceTree = "<group>"; };
+		97C3A16C27EDE9E800B5DC7F /* queue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = queue.hpp; sourceTree = "<group>"; };
+		97C3A16E27EDE9E800B5DC7F /* queue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = queue.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		97DD319227D566BE00225D9D /* Frameworks */ = {
+		97C3A15B27EDE91900B5DC7F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -45,62 +44,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		97DD318C27D566BE00225D9D = {
+		97C3A15527EDE91900B5DC7F = {
 			isa = PBXGroup;
 			children = (
-				97CF469827E04C7600288DF3 /* Fash_SJF.txt */,
-				97CF469527D6476400288DF3 /* queue.cpp */,
-				97CF469627D6476400288DF3 /* queue.hpp */,
-				97CF469327D646BF00288DF3 /* main.cpp */,
-				97DD31A127D644C100225D9D /* process.cpp */,
-				97DD31A227D644C100225D9D /* process.hpp */,
-				97DD319627D566BE00225D9D /* Products */,
+				97C3A16027EDE91A00B5DC7F /* CPUSchedulerMLFQ */,
+				97C3A15F27EDE91A00B5DC7F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		97DD319627D566BE00225D9D /* Products */ = {
+		97C3A15F27EDE91A00B5DC7F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				97DD319527D566BE00225D9D /* CPUScheduler */,
+				97C3A15E27EDE91A00B5DC7F /* CPUSchedulerMLFQ */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		97C3A16027EDE91A00B5DC7F /* CPUSchedulerMLFQ */ = {
+			isa = PBXGroup;
+			children = (
+				97C3A16A27EDE9E800B5DC7F /* main.cpp */,
+				97C3A16927EDE9E800B5DC7F /* process.cpp */,
+				97C3A16B27EDE9E800B5DC7F /* process.hpp */,
+				97C3A16E27EDE9E800B5DC7F /* queue.cpp */,
+				97C3A16C27EDE9E800B5DC7F /* queue.hpp */,
+			);
+			name = CPUSchedulerMLFQ;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		97DD319427D566BE00225D9D /* CPUScheduler */ = {
+		97C3A15D27EDE91900B5DC7F /* CPUSchedulerMLFQ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 97DD319C27D566BE00225D9D /* Build configuration list for PBXNativeTarget "CPUScheduler" */;
+			buildConfigurationList = 97C3A16527EDE91A00B5DC7F /* Build configuration list for PBXNativeTarget "CPUSchedulerMLFQ" */;
 			buildPhases = (
-				97DD319127D566BE00225D9D /* Sources */,
-				97DD319227D566BE00225D9D /* Frameworks */,
-				97DD319327D566BE00225D9D /* CopyFiles */,
+				97C3A15A27EDE91900B5DC7F /* Sources */,
+				97C3A15B27EDE91900B5DC7F /* Frameworks */,
+				97C3A15C27EDE91900B5DC7F /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = CPUScheduler;
-			productName = CPUScheduler;
-			productReference = 97DD319527D566BE00225D9D /* CPUScheduler */;
+			name = CPUSchedulerMLFQ;
+			productName = CPUSchedulerMLFQ;
+			productReference = 97C3A15E27EDE91A00B5DC7F /* CPUSchedulerMLFQ */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		97DD318D27D566BE00225D9D /* Project object */ = {
+		97C3A15627EDE91900B5DC7F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1330;
 				TargetAttributes = {
-					97DD319427D566BE00225D9D = {
-						CreatedOnToolsVersion = 13.2.1;
+					97C3A15D27EDE91900B5DC7F = {
+						CreatedOnToolsVersion = 13.3;
 					};
 				};
 			};
-			buildConfigurationList = 97DD319027D566BE00225D9D /* Build configuration list for PBXProject "CPUScheduler" */;
+			buildConfigurationList = 97C3A15927EDE91900B5DC7F /* Build configuration list for PBXProject "CPUSchedulerMLFQ" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -108,38 +114,37 @@
 				en,
 				Base,
 			);
-			mainGroup = 97DD318C27D566BE00225D9D;
-			productRefGroup = 97DD319627D566BE00225D9D /* Products */;
+			mainGroup = 97C3A15527EDE91900B5DC7F;
+			productRefGroup = 97C3A15F27EDE91A00B5DC7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				97DD319427D566BE00225D9D /* CPUScheduler */,
+				97C3A15D27EDE91900B5DC7F /* CPUSchedulerMLFQ */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		97DD319127D566BE00225D9D /* Sources */ = {
+		97C3A15A27EDE91900B5DC7F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97CF469427D646BF00288DF3 /* main.cpp in Sources */,
-				97DD31A327D644C100225D9D /* process.cpp in Sources */,
-				97CF469727D6476400288DF3 /* queue.cpp in Sources */,
+				97C3A17027EDE9E800B5DC7F /* main.cpp in Sources */,
+				97C3A16F27EDE9E800B5DC7F /* process.cpp in Sources */,
+				97C3A17127EDE9E800B5DC7F /* queue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		97DD319A27D566BE00225D9D /* Debug */ = {
+		97C3A16327EDE91A00B5DC7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -191,14 +196,13 @@
 			};
 			name = Debug;
 		};
-		97DD319B27D566BE00225D9D /* Release */ = {
+		97C3A16427EDE91A00B5DC7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -243,7 +247,7 @@
 			};
 			name = Release;
 		};
-		97DD319D27D566BE00225D9D /* Debug */ = {
+		97C3A16627EDE91A00B5DC7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -253,7 +257,7 @@
 			};
 			name = Debug;
 		};
-		97DD319E27D566BE00225D9D /* Release */ = {
+		97C3A16727EDE91A00B5DC7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -266,25 +270,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		97DD319027D566BE00225D9D /* Build configuration list for PBXProject "CPUScheduler" */ = {
+		97C3A15927EDE91900B5DC7F /* Build configuration list for PBXProject "CPUSchedulerMLFQ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				97DD319A27D566BE00225D9D /* Debug */,
-				97DD319B27D566BE00225D9D /* Release */,
+				97C3A16327EDE91A00B5DC7F /* Debug */,
+				97C3A16427EDE91A00B5DC7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		97DD319C27D566BE00225D9D /* Build configuration list for PBXNativeTarget "CPUScheduler" */ = {
+		97C3A16527EDE91A00B5DC7F /* Build configuration list for PBXNativeTarget "CPUSchedulerMLFQ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				97DD319D27D566BE00225D9D /* Debug */,
-				97DD319E27D566BE00225D9D /* Release */,
+				97C3A16627EDE91A00B5DC7F /* Debug */,
+				97C3A16727EDE91A00B5DC7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 97DD318D27D566BE00225D9D /* Project object */;
+	rootObject = 97C3A15627EDE91900B5DC7F /* Project object */;
 }
