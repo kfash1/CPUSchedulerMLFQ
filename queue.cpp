@@ -178,39 +178,59 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         }
     }
     
-    //Queue 2
+    //Queue 2, need to implement preemptive functionality
     else if (process[0].getPriorityQueue()==2)
     {
-        cout << "Process on the CPU: " << process[0].getName() << endl;
-        cpuTime = cpuTime + process[0].getData(0);
-    
-        //Checking to see if process is down to its last item, if so
-        //deletes the process
-        if (process[0].processSize() > 1)
+        //checks if CPU burst is greater than 12
+        if (process[0].getData(0)<13)
         {
-            //Setting arrival time on process
-            int newArrivalTime = cpuTime + process[0].getData(1);
-            process[0].setArrivalTime(newArrivalTime);
+            cout << "Process on the CPU: " << process[0].getName() << endl;
+            cpuTime = cpuTime + process[0].getData(0);
     
-            process[0].popFirstItem();
-            process[0].popFirstItem();
+            //Checking to see if process is down to its last item, if so
+            //deletes the process
+            if (process[0].processSize() > 1)
+            {
+                //Setting arrival time on process
+                int newArrivalTime = cpuTime + process[0].getData(1);
+                process[0].setArrivalTime(newArrivalTime);
     
-            Process transfer = process[0];
-            ioQueue.addProcess(transfer);
+                process[0].popFirstItem();
+                process[0].popFirstItem();
     
-            popFirstItem();
+                Process transfer = process[0];
+                ioQueue.addProcess(transfer);
+    
+                popFirstItem();
+            }
+            else
+            {
+                process[0].setLastTime(cpuTime);
+                Process transfer = process[0];
+                completeQueue.addProcess(transfer);
+                popFirstItem();
+            }
+            return cpuTime;
         }
+        //Since burst is over 12, only 12 units will be done and priority downgraded
         else
         {
-            process[0].setLastTime(cpuTime);
-            Process transfer = process[0];
-            completeQueue.addProcess(transfer);
-            popFirstItem();
+            cout << "Process on the CPU: " << process[0].getName() << endl;
+            cpuTime = cpuTime + 12;
+            
+            //setting new CPU burst since it only got to do 12 units
+            process[0].set(0,process[0].getData(0)-12);
+            process[0].setPriorityQueue(3);
+            
+            //updating arrival time
+            int newArrivalTime = cpuTime + process[0].getData(1);
+            process[0].setArrivalTime(newArrivalTime);
+            
+            return cpuTime;
         }
-        return cpuTime;
     }
     
-    //Queue 3
+    //Queue 3 need to implement preemptive functionality
     else
     {
         cout << "Process on the CPU: " << process[0].getName() << endl;

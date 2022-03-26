@@ -49,7 +49,7 @@ int main()
     readyQueue.sortQueue();
     
     //not actual value just testing
-    for (int i=0;i<25;i++)
+    for (int i=0;i<50;i++)
     //while (cpuTime != 896)
     {
         cout << "Current Time: " << cpuTime << endl;
