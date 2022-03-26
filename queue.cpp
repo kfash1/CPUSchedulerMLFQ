@@ -99,10 +99,32 @@ void Queue::sortQueue()
     }
 }
 
+//sorts the Queue
+void Queue::sortIOQueue()
+{
+    //If this is empty, we don't want it to try to do a sort becasue it will crash
+    if (process.size() == 0)
+    {
+        return;
+    }
+
+    //bubblesort for arrival time
+    for (int i = 0; i < process.size()-1; i++)
+    {
+        for (int j = 0; j < process.size()-i-1; j++)
+        {
+            if (process[j].getArrivalTime() > process[j+1].getArrivalTime())
+            {
+                swap(process[j], process[j+1]);
+            }
+        }
+    }
+}
 
 int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
 {
-     //accounting for Idle time if the ready Queue is empty
+    int processBurst = process[0].getData(0);
+    //accounting for Idle time if the ready Queue is empty
      //but there are still process in the ioQueue
     if( process.size() == 0)
     {
@@ -131,10 +153,10 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
     if (process[0].getPriorityQueue()==1)
     {
         //normal process because CPU burst is 8 or less
-        if (process[0].getData(0)<9)
+        if (processBurst<9)
         {
             cout << "Process on the CPU: " << process[0].getName() << endl;
-            cpuTime = cpuTime + process[0].getData(0);
+            cpuTime = cpuTime + processBurst;
             
             //Checking to see if process is down to its last item, if so
             //deletes the process
@@ -181,11 +203,11 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
     //Queue 2, need to implement preemptive functionality
     else if (process[0].getPriorityQueue()==2)
     {
-        //checks if CPU burst is greater than 12
-        if (process[0].getData(0)<13)
+        //checks if CPU burst is not greater than 12, if not proceeds
+        if (processBurst<13)
         {
             cout << "Process on the CPU: " << process[0].getName() << endl;
-            cpuTime = cpuTime + process[0].getData(0);
+            cpuTime = cpuTime + processBurst;
     
             //Checking to see if process is down to its last item, if so
             //deletes the process
@@ -234,7 +256,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
     else
     {
         cout << "Process on the CPU: " << process[0].getName() << endl;
-        cpuTime = cpuTime + process[0].getData(0);
+        cpuTime = cpuTime + processBurst;
     
         //Checking to see if process is down to its last item, if so
         //deletes the process
@@ -365,4 +387,17 @@ int Queue::getArrivalOfFirstItem()
     }
 
     return UNINIT_ARRIVAL_TIME;
+}
+
+//If empty returns 1, else 0
+int Queue::isEmpty()
+{
+    if (process.size() == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }

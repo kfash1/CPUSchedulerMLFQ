@@ -44,13 +44,8 @@ int main()
     Queue completeQueue("completeQueue");
     
     
-    //Start of SJF algorithm
-    
-    readyQueue.sortQueue();
-    
-    //not actual value just testing
-    for (int i=0;i<50;i++)
-    //while (cpuTime != 896)
+    //Start of MLFQ algorithm
+    while (ioQueue.isEmpty()!=1 || readyQueue.isEmpty()!=1)
     {
         cout << "Current Time: " << cpuTime << endl;
     
@@ -60,16 +55,14 @@ int main()
     
         readyQueue.sortQueue();
 
-        ioQueue.sortQueue();
+        ioQueue.sortIOQueue();
         
         readyQueue.displayReadyQueue();
 
         ioQueue.displayIOQueue(cpuTime);
     }
 
-    /* Turned off for testing
-
-    //Displaying final output for SJF algorithm
+    //Displaying final output for MLFQ algorithm
     cout << "Finished" << endl;
     cout << endl;
     cout << "Total time: " << cpuTime << endl;
@@ -79,7 +72,6 @@ int main()
     //printing the RT, WT, TT, and Avgs
     completeQueue.printData();
     
-    */
     cout << endl << endl;
     return 0;
 }

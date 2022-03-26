@@ -24,8 +24,10 @@ public:
     void popFirstItem();
     void checkIOStatus(int time, Queue& readyQueue);
     void sortQueue();
+    void sortIOQueue();
     int getIdle();
     int getArrivalOfFirstItem();
+    int isEmpty();
     
 private:
     vector<Process> process;
