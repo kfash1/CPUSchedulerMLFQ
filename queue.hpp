@@ -18,13 +18,12 @@ public:
     Queue(vector<Process> processes, string name);
     void displayReadyQueue();
     void displayIOQueue(int time);
-    void sortReadyQueue();
     int runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue);
     void printData();
     void addProcess(Process process);
     void popFirstItem();
     void checkIOStatus(int time, Queue& readyQueue);
-    void sortIOQueue();
+    void sortQueue();
     int getIdle();
     int getArrivalOfFirstItem();
     

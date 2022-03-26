@@ -64,30 +64,8 @@ void Queue::displayIOQueue(int time)
     }
     cout << endl << "###########################################" << endl << endl;
 }
-
-//Sort the processes by CPU burst
-void Queue::sortReadyQueue()
-{
-    //If this is empty, we don't want it to try to do a sort becasue it will crash
-    if (process.size() == 0)
-    {
-        return;
-    }
-
-    //bubblesort
-    for (int i = 0; i < process.size()-1; i++)
-    {
-        for (int j = 0; j < process.size()-i-1; j++)
-        {
-            if (process[j].getData(0) > process[j+1].getData(0))
-            {
-                swap(process[j], process[j+1]);
-            }
-        }
-    }
-}
-
-void Queue::sortIOQueue()
+//sorts the Queue
+void Queue::sortQueue()
 {
     //If this is empty, we don't want it to try to do a sort becasue it will crash
     if (process.size() == 0)

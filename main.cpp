@@ -46,7 +46,7 @@ int main()
     
     //Start of SJF algorithm
     
-    readyQueue.sortReadyQueue();
+    readyQueue.sortQueue();
     
     //for testing, doing a large loop
     //270 is the exact number we need for everthing to get processed
@@ -58,9 +58,9 @@ int main()
     
         ioQueue.checkIOStatus(cpuTime, readyQueue);
     
-        readyQueue.sortReadyQueue();
+        readyQueue.sortQueue();
 
-        ioQueue.sortIOQueue();
+        ioQueue.sortQueue();
         
         readyQueue.displayReadyQueue();
 
