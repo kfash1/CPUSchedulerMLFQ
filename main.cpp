@@ -48,9 +48,9 @@ int main()
     
     readyQueue.sortQueue();
     
-    //for testing, doing a large loop
-    //270 is the exact number we need for everthing to get processed
-    while (cpuTime != 896)
+    //not actual value just testing
+    for (int i=0;i<25;i++)
+    //while (cpuTime != 896)
     {
         cout << "Current Time: " << cpuTime << endl;
     
@@ -66,12 +66,8 @@ int main()
 
         ioQueue.displayIOQueue(cpuTime);
     }
-    
-    //Outputing last CPU time, ready queue, and I/O Queue
-    cout << "Current Time: " << cpuTime << endl;
-    readyQueue.displayReadyQueue();
-    ioQueue.displayIOQueue(cpuTime);
-    cout << endl;
+
+    /* Turned off for testing
 
     //Displaying final output for SJF algorithm
     cout << "Finished" << endl;
@@ -83,7 +79,7 @@ int main()
     //printing the RT, WT, TT, and Avgs
     completeQueue.printData();
     
-
+    */
     cout << endl << endl;
     return 0;
 }

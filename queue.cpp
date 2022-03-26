@@ -30,17 +30,18 @@ void Queue::displayReadyQueue()
 {
     cout << endl << "*******************************************" << endl << endl;
     cout << "List of processes in the ready queue:" << endl << endl;
-    cout << "Process      Burst" << endl;
+    cout << "Process\t\tBurst\t\tQueue" << endl;
 
     //Checking if the ready queue is empty
     if (process.size() == 0)
     {
-        cout << "[Empty]" << "      " << "[Empty]" << endl;
+        cout << "[Empty]\t\t[Empty]\t\t[Empty]" << endl;
     }
 
     for (int i=0; i<process.size(); i++)
     {
-        cout << process[i].getName() << "           " << process[i].getData(0) << endl;
+        cout << process[i].getName() << "\t\t\t" << process[i].getData(0);
+        cout << "\t\t\t" << process[i].getPriorityQueue() << endl;
     }
 
     cout << endl << "-------------------------------------------" << endl << endl;
@@ -73,7 +74,7 @@ void Queue::sortQueue()
         return;
     }
 
-    //bubblesort
+    //bubblesort for arrival time
     for (int i = 0; i < process.size()-1; i++)
     {
         for (int j = 0; j < process.size()-i-1; j++)
@@ -84,14 +85,21 @@ void Queue::sortQueue()
             }
         }
     }
+    
+    //bubblesort for priority queue
+    for (int i = 0; i < process.size()-1; i++)
+    {
+        for (int j = 0; j < process.size()-i-1; j++)
+        {
+            if (process[j].getPriorityQueue() > process[j+1].getPriorityQueue())
+            {
+                swap(process[j], process[j+1]);
+            }
+        }
+    }
 }
 
-//Takes process with shortest job and adds
-//its burst to the cpuTime.  It then moves the process
-//to the ioQueue and updates the arrivalTime for
-//when it will be able to go back to the readyQueue.
-//Passes the ioQueue by reference so both queues can
-//be updated
+
 int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
 {
      //accounting for Idle time if the ready Queue is empty
@@ -117,34 +125,122 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         process[0].setFirstArrivalTime(cpuTime);
     }
 
-
-    cout << "Process on the CPU: " << process[0].getName() << endl;
-    cpuTime = cpuTime + process[0].getData(0);
     
-    //Checking to see if process is down to its last item, if so
-    //deletes the process
-    if (process[0].processSize() > 1)
+    //Priority 1 Process.  Since its priority 1 it will never get
+    //preempted
+    if (process[0].getPriorityQueue()==1)
     {
-        //Setting arrival time on process
-        int newArrivalTime = cpuTime + process[0].getData(1);
-        process[0].setArrivalTime(newArrivalTime);
-    
-        process[0].popFirstItem();
-        process[0].popFirstItem();
-    
-        Process transfer = process[0];
-        ioQueue.addProcess(transfer);
-    
-        popFirstItem();
+        //normal process because CPU burst is 8 or less
+        if (process[0].getData(0)<9)
+        {
+            cout << "Process on the CPU: " << process[0].getName() << endl;
+            cpuTime = cpuTime + process[0].getData(0);
+            
+            //Checking to see if process is down to its last item, if so
+            //deletes the process
+            if (process[0].processSize() > 1)
+            {
+                //Setting arrival time on process
+                int newArrivalTime = cpuTime + process[0].getData(1);
+                process[0].setArrivalTime(newArrivalTime);
+            
+                process[0].popFirstItem();
+                process[0].popFirstItem();
+            
+                Process transfer = process[0];
+                ioQueue.addProcess(transfer);
+            
+                popFirstItem();
+            }
+            else{
+                process[0].setLastTime(cpuTime);
+                Process transfer = process[0];
+                completeQueue.addProcess(transfer);
+                popFirstItem();
+            }
+            return cpuTime;
+        }
+        //Since burst is over 8, only 8 units will be done and priority downgraded
+        else
+        {
+            cout << "Process on the CPU: " << process[0].getName() << endl;
+            cpuTime = cpuTime + 8;
+            
+            //setting new CPU burst since it only got to do 8 units
+            process[0].set(0,process[0].getData(0)-8);
+            process[0].setPriorityQueue(2);
+            
+            //updating arrival time
+            int newArrivalTime = cpuTime + process[0].getData(1);
+            process[0].setArrivalTime(newArrivalTime);
+            
+            return cpuTime;
+        }
     }
-    else{
-        process[0].setLastTime(cpuTime);
-        Process transfer = process[0];
-        completeQueue.addProcess(transfer);
-        popFirstItem();
+    
+    //Queue 2
+    else if (process[0].getPriorityQueue()==2)
+    {
+        cout << "Process on the CPU: " << process[0].getName() << endl;
+        cpuTime = cpuTime + process[0].getData(0);
+    
+        //Checking to see if process is down to its last item, if so
+        //deletes the process
+        if (process[0].processSize() > 1)
+        {
+            //Setting arrival time on process
+            int newArrivalTime = cpuTime + process[0].getData(1);
+            process[0].setArrivalTime(newArrivalTime);
+    
+            process[0].popFirstItem();
+            process[0].popFirstItem();
+    
+            Process transfer = process[0];
+            ioQueue.addProcess(transfer);
+    
+            popFirstItem();
+        }
+        else
+        {
+            process[0].setLastTime(cpuTime);
+            Process transfer = process[0];
+            completeQueue.addProcess(transfer);
+            popFirstItem();
+        }
+        return cpuTime;
     }
     
-    return cpuTime;
+    //Queue 3
+    else
+    {
+        cout << "Process on the CPU: " << process[0].getName() << endl;
+        cpuTime = cpuTime + process[0].getData(0);
+    
+        //Checking to see if process is down to its last item, if so
+        //deletes the process
+        if (process[0].processSize() > 1)
+        {
+            //Setting arrival time on process
+            int newArrivalTime = cpuTime + process[0].getData(1);
+            process[0].setArrivalTime(newArrivalTime);
+    
+            process[0].popFirstItem();
+            process[0].popFirstItem();
+    
+            Process transfer = process[0];
+            ioQueue.addProcess(transfer);
+    
+            popFirstItem();
+        }
+        else
+        {
+            process[0].setLastTime(cpuTime);
+            Process transfer = process[0];
+            completeQueue.addProcess(transfer);
+            popFirstItem();
+        }
+        return cpuTime;
+    }
 }
 
 void Queue::printData()
