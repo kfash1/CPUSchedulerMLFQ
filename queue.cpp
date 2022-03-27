@@ -51,17 +51,18 @@ void Queue::displayReadyQueue()
 void Queue::displayIOQueue(int time)
 {
     cout << "List of processes in the IO queue:" << endl << endl;
-    cout << "Process      Remaining IO time" << endl;
+    cout << "Process\t\tRemaining IO time\tQueue" << endl;
 
       //Checking if the ioQueue is empty
     if (process.size() == 0)
     {
-        cout << "[Empty]" << "      " << "[Empty]" << endl;
+        cout << "[Empty]\t\t[Empty]\t\t\t\t[Empty]" << endl;
     }
 
     for (int i=0; i<process.size(); i++)
     {
-        cout << process[i].getName() << "           " << process[i].getArrivalTime()-time << endl;
+        cout << process[i].getName() << "\t\t\t" << process[i].getArrivalTime()-time;
+        cout << "\t\t\t\t\t" << process[i].getPriorityQueue() << endl;
     }
     cout << endl << "###########################################" << endl << endl;
 }
@@ -256,6 +257,26 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
     else
     {
         cout << "Process on the CPU: " << process[0].getName() << endl;
+        
+        //testing preemptive process
+        /*
+        int startTime = cpuTime;
+        int endTime = cpuTime+processBurst;
+        int preemptTime = 0;
+
+        while (startTime<endTime)
+        {
+            if(ioQueue.process[0].getArrivalTime()<=startTime && ioQueue.process[0].getPriorityQueue()<3)
+            {
+                cout << "Process would be preempted" << endl;
+                preemptTime = startTime;
+                break;
+            }
+            startTime++;
+        }
+        */
+        //end of preempt testing
+
         cpuTime = cpuTime + processBurst;
     
         //Checking to see if process is down to its last item, if so
