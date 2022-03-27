@@ -1,3 +1,4 @@
+.PHONY=all
 CC=g++
 CFLAGS=-I.
 DEPS = process.hpp queue.hpp
@@ -8,6 +9,8 @@ OBJ = main.o process.o queue.o
 
 CPUSchedulerMLFQ-runner: $(OBJ)
 	$(CC) -std=c++11 -o $@ $^ $(CFLAGS)
+
+all: CPUSchedulerMLFQ-runner
 
 clean:
 	$(RM) $(OBJ) CPUSchedulerMLFQ-runner
