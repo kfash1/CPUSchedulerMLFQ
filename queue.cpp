@@ -30,18 +30,19 @@ void Queue::displayReadyQueue()
 {
     cout << endl << "*******************************************" << endl << endl;
     cout << "List of processes in the ready queue:" << endl << endl;
-    cout << "Process\t\tBurst\t\tQueue" << endl;
+    cout << "Process\t\tBurst\t\tQueue\t\tArrival" << endl;
 
     //Checking if the ready queue is empty
     if (process.size() == 0)
     {
-        cout << "[Empty]\t\t[Empty]\t\t[Empty]" << endl;
+        cout << "[Empty]\t\t[Empty]\t\t[Empty]\t\t[Empty]" << endl;
     }
 
     for (int i=0; i<process.size(); i++)
     {
         cout << process[i].getName() << "\t\t\t" << process[i].getData(0);
-        cout << "\t\t\t" << process[i].getPriorityQueue() << endl;
+        cout << "\t\t\t" << process[i].getPriorityQueue();
+        cout << "\t\t\t" << process[i].getArrivalTime() << endl;
     }
 
     cout << endl << "-------------------------------------------" << endl << endl;
@@ -93,6 +94,18 @@ void Queue::sortQueue()
         for (int j = 0; j < process.size()-i-1; j++)
         {
             if (process[j].getPriorityQueue() > process[j+1].getPriorityQueue())
+            {
+                swap(process[j], process[j+1]);
+            }
+        }
+    }
+    
+    //bubblesort for tie breaker when same arrival and priority
+    for (int i = 0; i < process.size()-1; i++)
+    {
+        for (int j = 0; j < process.size()-i-1; j++)
+        {
+            if (process[j].getData(0) > process[j+1].getData(0) && process[j].getPriorityQueue() == process[j+1].getPriorityQueue() && process[j].getArrivalTime() == process[j+1].getArrivalTime() && process[j].getArrivalTime() != 0)
             {
                 swap(process[j], process[j+1]);
             }
@@ -207,30 +220,80 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
     else if (process[0].getPriorityQueue()==2)
     {
         //testing preemptive process
+        /*
         int preemptTime = 0;
-        if(ioQueue.process[0].getPriorityQueue() == 1 && (ioQueue.process[0].getArrivalTime() - cpuTime) < process[0].getData(0))
+        int processNum = 0;
+        int preemptStatus = 0;
+        while (processNum < ioQueue.process.size() && preemptStatus == 0)
+        {
+            if (ioQueue.process[processNum].getPriorityQueue() == 1 && (ioQueue.process[processNum].getArrivalTime() - cpuTime) < process[0].getData(0))
+            {
+                cout << "Process on the CPU: " << process[0].getName() << endl;
+                preemptStatus = 1;
+                cout << "Test Process " << process[0].getName() << " is getting preempted by " << ioQueue.process[processNum].getName() << endl;
+            }
+            else
+            {
+                processNum++;
+            }
+        }
+        if (preemptStatus == 1)
         {
             //comments to check the display output
-            /*
-            cout << "The current cpuTime is " << cpuTime << " in Q2-1" << endl;
-            cout << "Process " << process[0].getName() << " is getting preempted becasue a Q1 became available" << endl;
-            cout << "Inside the preempted loop for Q2" << endl;
-            cout << "The cpuTime is currently " << cpuTime << endl;
-            */
             
-            preemptTime = process[0].getData(0) - (ioQueue.process[0].getArrivalTime() - cpuTime);
+            //cout << "The current cpuTime is " << cpuTime << " in Q2-1" << endl;
+            //cout << "Process " << process[0].getName() << " is getting preempted becasue a Q1 became available" << endl;
+            //cout << "Inside the preempted loop for Q2" << endl;
+            //cout << "The cpuTime is currently " << cpuTime << endl;
             
+            preemptTime = process[0].getData(0) - (ioQueue.process[processNum].getArrivalTime() - cpuTime);
             process[0].set(0, preemptTime);
-            cpuTime += (ioQueue.process[0].getArrivalTime() - cpuTime);
+            cpuTime += (ioQueue.process[processNum].getArrivalTime() - cpuTime);
             process[0].setArrivalTime(cpuTime);
-            
             return cpuTime;
         }
-        
+        */
         //if the CPU burst is less than or 12, it doesn't get placed in a lower queue
         if (processBurst <= 12)
         {
             cout << "Process on the CPU: " << process[0].getName() << endl;
+            
+            //testing preemptive process
+            int preemptTime = 0;
+            int processNum = 0;
+            int preemptStatus = 0;
+            while (processNum < ioQueue.process.size() && preemptStatus == 0)
+            {
+                if (ioQueue.process[processNum].getPriorityQueue() == 1 && (ioQueue.process[processNum].getArrivalTime() - cpuTime) < process[0].getData(0))
+                {
+                    cout << "Process on the CPU: " << process[0].getName() << endl;
+                    preemptStatus = 1;
+                    cout << "Test Process " << process[0].getName() << " is getting preempted by " << ioQueue.process[processNum].getName() << endl;
+                }
+                else
+                {
+                    processNum++;
+                }
+            }
+            if (preemptStatus == 1)
+            {
+                //comments to check the display output
+                /*
+                cout << "The current cpuTime is " << cpuTime << " in Q2-1" << endl;
+                cout << "Process " << process[0].getName() << " is getting preempted becasue a Q1 became available" << endl;
+                cout << "Inside the preempted loop for Q2" << endl;
+                cout << "The cpuTime is currently " << cpuTime << endl;
+                */
+                preemptTime = process[0].getData(0) - (ioQueue.process[processNum].getArrivalTime() - cpuTime);
+                process[0].set(0, preemptTime);
+                cpuTime += (ioQueue.process[processNum].getArrivalTime() - cpuTime);
+                process[0].setArrivalTime(cpuTime);
+                return cpuTime;
+            }
+            
+            
+            
+            
             cpuTime += processBurst;
     
             //Checking to see if process is down to its last item, if so
@@ -262,6 +325,43 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         //Since burst is over 12, only 12 units will be done and priority downgraded
         else
         {
+            cout << "Process on the CPU: " << process[0].getName() << endl;
+            
+            //testing preemptive process
+            int preemptTime = 0;
+            int processNum = 0;
+            int preemptStatus = 0;
+            while (processNum < ioQueue.process.size() && preemptStatus == 0)
+            {
+                if (ioQueue.process[processNum].getPriorityQueue() == 1 && (ioQueue.process[processNum].getArrivalTime() - cpuTime) < process[0].getData(0))
+                {
+                    cout << "Process on the CPU: " << process[0].getName() << endl;
+                    preemptStatus = 1;
+                    cout << "Test Process " << process[0].getName() << " is getting preempted by " << ioQueue.process[processNum].getName() << endl;
+                }
+                else
+                {
+                    processNum++;
+                }
+            }
+            if (preemptStatus == 1)
+            {
+                //comments to check the display output
+                /*
+                cout << "The current cpuTime is " << cpuTime << " in Q2-1" << endl;
+                cout << "Process " << process[0].getName() << " is getting preempted becasue a Q1 became available" << endl;
+                cout << "Inside the preempted loop for Q2" << endl;
+                cout << "The cpuTime is currently " << cpuTime << endl;
+                */
+                preemptTime = process[0].getData(0) - (ioQueue.process[processNum].getArrivalTime() - cpuTime);
+                process[0].set(0, preemptTime);
+                cpuTime += (ioQueue.process[processNum].getArrivalTime() - cpuTime);
+                process[0].setArrivalTime(cpuTime);
+                return cpuTime;
+            }
+            
+            
+            
             cpuTime = cpuTime + 12;
             
             //setting new CPU burst since it only got to do 12 units
@@ -284,9 +384,45 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
     {
         cout << "Process on the CPU: " << process[0].getName() << endl;
         
+        
         //testing preemptive process
-        int startTime = cpuTime;
-        int endTime = cpuTime + processBurst;
+        int preemptTime = 0;
+        int processNum = 0;
+        int preemptStatus = 0;
+        while (processNum < ioQueue.process.size() && preemptStatus == 0)
+        {
+            if (ioQueue.process[processNum].getPriorityQueue() < 3 && (ioQueue.process[processNum].getArrivalTime() - cpuTime) < process[0].getData(0))
+            {
+                cout << "Process on the CPU: " << process[0].getName() << endl;
+                preemptStatus = 1;
+                cout << "Test Process " << process[0].getName() << " is getting preempted by " << ioQueue.process[processNum].getName() << endl;
+            }
+            else
+            {
+                processNum++;
+            }
+        }
+        if (preemptStatus == 1)
+        {
+            //comments to check the display output
+            /*
+            cout << "The current cpuTime is " << cpuTime << " in Q2-1" << endl;
+            cout << "Process " << process[0].getName() << " is getting preempted becasue a Q1 became available" << endl;
+            cout << "Inside the preempted loop for Q2" << endl;
+            cout << "The cpuTime is currently " << cpuTime << endl;
+            */
+            preemptTime = process[0].getData(0) - (ioQueue.process[processNum].getArrivalTime() - cpuTime);
+            process[0].set(0, preemptTime);
+            cpuTime += (ioQueue.process[processNum].getArrivalTime() - cpuTime);
+            process[0].setArrivalTime(cpuTime);
+            return cpuTime;
+        }
+        
+        
+        //testing preemptive process
+        //int startTime = cpuTime;
+        //int endTime = cpuTime + processBurst;
+        /*
         int preemptTime = 0;
         
         if(ioQueue.process[0].getPriorityQueue() < 3 && (ioQueue.process[0].getArrivalTime() - cpuTime) < process[0].getData(0))
@@ -304,7 +440,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             return cpuTime;
 
         }
-
+        */
         //end of preempt testing
         cpuTime = cpuTime + processBurst;
 
@@ -452,3 +588,5 @@ int Queue::isEmpty()
         return 0;
     }
 }
+
+
