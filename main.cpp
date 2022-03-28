@@ -24,6 +24,19 @@ int main()
     vector<int> data7 = {14, 46, 17, 41, 11, 42, 15, 21, 4, 32, 7, 19, 16, 33, 10};
     vector<int> data8 = {4, 64, 5, 53, 6, 44, 4, 73, 6, 87, 5 ,66, 8, 25, 6, 33, 9, 41, 7};
     vector<int> data9 = {13, 37, 8, 41, 7, 27, 12, 29, 5, 27, 6, 18, 3, 33, 4, 62, 6};
+    
+
+   /*
+    vector<int> data1 = {7, 22, 6};
+    vector<int> data2 = {14, 48, 15};
+    vector<int> data3 = {8, 43, 7};
+    vector<int> data4 = {13, 37, 4};
+    vector<int> data5 = {6, 34, 7};
+    vector<int> data6 = {9, 32, 4};
+    vector<int> data7 = {14, 46, 17};
+    vector<int> data8 = {4, 64, 5};
+    vector<int> data9 = {13, 37, 8};  
+    */ 
 
     //Initializing processes
     Process p1("P1", data1);
@@ -73,5 +86,6 @@ int main()
     completeQueue.printData();
     
     cout << endl << endl;
+
     return 0;
 }
