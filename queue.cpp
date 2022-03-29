@@ -75,7 +75,19 @@ void Queue::sortQueue()
     {
         return;
     }
-
+    
+    //bubblesort for last time
+    for (int i = 0; i < process.size()-1; i++)
+    {
+        for (int j = 0; j < process.size()-i-1; j++)
+        {
+            if (process[j].getLastTime() > process[j+1].getLastTime())
+            {
+                swap(process[j], process[j+1]);
+            }
+        }
+    }
+    
     //bubblesort for arrival time
     for (int i = 0; i < process.size()-1; i++)
     {
@@ -94,18 +106,6 @@ void Queue::sortQueue()
         for (int j = 0; j < process.size()-i-1; j++)
         {
             if (process[j].getPriorityQueue() > process[j+1].getPriorityQueue())
-            {
-                swap(process[j], process[j+1]);
-            }
-        }
-    }
-    
-    //bubblesort for tie breaker when same arrival and priority
-    for (int i = 0; i < process.size()-1; i++)
-    {
-        for (int j = 0; j < process.size()-i-1; j++)
-        {
-            if (process[j].getData(0) > process[j+1].getData(0) && process[j].getPriorityQueue() == process[j+1].getPriorityQueue() && process[j].getArrivalTime() == process[j+1].getArrivalTime() && process[j].getArrivalTime() != 0)
             {
                 swap(process[j], process[j+1]);
             }
