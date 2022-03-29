@@ -25,19 +25,6 @@ int main()
     vector<int> data8 = {4, 64, 5, 53, 6, 44, 4, 73, 6, 87, 5 ,66, 8, 25, 6, 33, 9, 41, 7};
     vector<int> data9 = {13, 37, 8, 41, 7, 27, 12, 29, 5, 27, 6, 18, 3, 33, 4, 62, 6};
     
-
-   /*
-    vector<int> data1 = {7, 22, 6};
-    vector<int> data2 = {14, 48, 15};
-    vector<int> data3 = {8, 43, 7};
-    vector<int> data4 = {13, 37, 4};
-    vector<int> data5 = {6, 34, 7};
-    vector<int> data6 = {9, 32, 4};
-    vector<int> data7 = {14, 46, 17};
-    vector<int> data8 = {4, 64, 5};
-    vector<int> data9 = {13, 37, 8};  
-    */ 
-
     //Initializing processes
     Process p1("P1", data1);
     Process p2("P2", data2);
@@ -56,22 +43,15 @@ int main()
     Queue ioQueue("ioQueue");
     Queue completeQueue("completeQueue");
     
-    
     //Start of MLFQ algorithm
     while (ioQueue.isEmpty()!=1 || readyQueue.isEmpty()!=1)
     {
         cout << "Current Time: " << cpuTime << endl;
-    
         cpuTime = readyQueue.runProcess(cpuTime, ioQueue, completeQueue);
-    
         ioQueue.checkIOStatus(cpuTime, readyQueue);
-    
         readyQueue.sortQueue();
-
         ioQueue.sortIOQueue();
-        
         readyQueue.displayReadyQueue();
-
         ioQueue.displayIOQueue(cpuTime);
     }
 
@@ -81,10 +61,8 @@ int main()
     cout << "Total time: " << cpuTime << endl;
     cout << endl << "CPU Utlization: " << 100-((float(readyQueue.getIdle()))/(float(cpuTime))*100) << "%" << endl;
 
-
     //printing the RT, WT, TT, and Avgs
     completeQueue.printData();
-    
     cout << endl << endl;
 
     return 0;

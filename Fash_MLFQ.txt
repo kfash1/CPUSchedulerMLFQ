@@ -1,11 +1,201 @@
-//
-//  queue.cpp
-//  CPUScheduler
-//
-//  Created by Kevin Fash on 3/7/22.
-//
+//SJF Source Code
+//Kevin Fash
+//Laura Casals
 
-#include "queue.hpp"
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <algorithm>
+#include <iomanip>
+
+using namespace std;
+
+#define UNINIT_ARRIVAL_TIME - 1
+
+class Process
+{
+public:
+    Process();
+    Process(string name, vector<int> values);
+    int getArrivalTime();
+    void setArrivalTime(int time);
+    int getProcessState();
+    void setProcessState(int state);
+    void calculateTotalBurst();
+    void setFirstArrivalTime(int time);
+    void setLastTime(int time);
+    string getName();
+    int getData(int i);
+    void set(int i, int value);
+    void print();
+    void popFirstItem();
+    int processSize();
+    int getTotalBurst();
+    int getFirstArrivalTime();
+    int getLastTime();
+    int getPriorityQueue();
+    void setPriorityQueue(int queue);
+
+private:
+    string name;
+    int arrivalTime = 0; //time when process arrived to ready state
+    vector<int> data; //contains data
+    int processState = 0; //Determines whether process is ready, in I/O
+    int totalBurst;
+    int firstArrivalTime;
+    int lastTime = 0;
+    int priorityQueue = 1;
+};
+
+class Queue
+{
+public:
+    Queue();
+    Queue(string name);
+    Queue(vector<Process> processes, string name);
+    void displayReadyQueue();
+    void displayIOQueue(int time);
+    int runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue);
+    void printData();
+    void addProcess(Process process);
+    void popFirstItem();
+    void checkIOStatus(int time, Queue& readyQueue);
+    void sortQueue();
+    void sortIOQueue();
+    int getIdle();
+    int getArrivalOfFirstItem();
+    int isEmpty();
+    
+private:
+    vector<Process> process;
+    string name;
+    int idle = 0;
+};
+
+//Object constructor
+Process::Process() :
+    totalBurst(0),
+    firstArrivalTime(UNINIT_ARRIVAL_TIME)
+{
+    
+}
+
+Process::Process(string name, vector<int> values):
+    totalBurst(0),
+    firstArrivalTime(UNINIT_ARRIVAL_TIME)
+{
+    this->name = name;
+    this->data = values;
+    calculateTotalBurst();
+}
+
+//Returns the arrival time when the process will get to ready state
+int Process::getArrivalTime()
+{
+    return arrivalTime;
+}
+
+//Sets the arrival time
+void Process::setArrivalTime(int time)
+{
+    arrivalTime = time;
+}
+
+//Returns the process state
+int Process::getProcessState()
+{
+    return processState;
+}
+
+//Changes the process state
+void Process::setProcessState(int state)
+{
+    processState = state;
+}
+
+//calculating all the CPU and I/0 bursts
+void Process::calculateTotalBurst()
+{
+    totalBurst = 0;
+    for(int i = 0; i < data.size(); i ++)
+    {
+        totalBurst += data[i];
+    }
+}
+
+//first time its on the CPU
+void Process::setFirstArrivalTime(int time)
+{
+    firstArrivalTime = time;
+}
+
+//Last time its on the CPU
+void Process::setLastTime(int time)
+{
+    lastTime = time;
+}
+
+//Returns name
+string Process::getName()
+{
+    return name;
+}
+
+//Returns value of data from vector at index i
+int Process::getData(int i)
+{
+    return data[i];
+}
+
+void Process::set(int i, int value)
+{
+    data[i] = value;
+}
+
+void Process::print()
+{
+    for (int i = 0; i < data.size(); i++)
+    {
+        cout << data[i] << ", ";
+    }
+    cout << endl;
+}
+
+void Process::popFirstItem()
+{
+    data.erase(data.begin());
+}
+
+int Process::processSize()
+{
+    return int(data.size());
+}
+
+int Process::getTotalBurst()
+{
+    return totalBurst;
+}
+
+int Process::getFirstArrivalTime()
+{
+    return firstArrivalTime;
+}
+
+int Process::getLastTime()
+{
+    return lastTime;
+}
+
+int Process::getPriorityQueue()
+{
+    return priorityQueue;
+}
+
+void Process::setPriorityQueue(int queue)
+{
+    priorityQueue = queue;
+}
 
 Queue::Queue()
 {
@@ -424,7 +614,7 @@ void Queue::printData()
     }
 
     cout << left << setw(2) << "Avg"
-         << setprecision(4) 
+         << setprecision(4)
          << right << setw(13) << responseTimeAvg/9
          << right << setw(11) << waitTimeAvg/9
          << right << setw(11) << turnAroundAvg/9 << endl;
@@ -492,4 +682,66 @@ int Queue::isEmpty()
     {
         return 0;
     }
+}
+
+int main()
+{
+    int cpuTime = 0;
+    
+    cout << "CPU Scheduler Project - MLFQ" << endl;
+    cout << "Kevin Fash" << endl;
+    cout << "Laura Casals" << endl << endl;
+    
+    //process goes {CPU burst, I/O time, CPU burst, I/O time, CPU burst, I/O time,........, last CPU burst}
+    vector<int> data1 = {7, 22, 6, 19, 12, 44, 8, 21, 10, 37, 5, 24, 6, 44, 7 , 43, 8};
+    vector<int> data2 = {14, 48, 15, 44, 17, 42, 22, 37, 19, 76, 14, 41, 16, 31, 17, 43, 18};
+    vector<int> data3 = {8, 43, 7, 41, 6, 45, 8, 21, 9, 35, 14, 18, 5, 26, 3, 31, 6};
+    vector<int> data4 = {13, 37, 4, 41, 5, 35, 12, 41, 8, 55, 15, 34, 6, 73, 5, 77, 3 };
+    vector<int> data5 = {6, 34, 7, 21, 5, 44, 6, 32, 7, 28, 3, 48, 11, 44, 6, 33, 3, 28, 4};
+    vector<int> data6 = {9, 32, 4, 28, 5, 10, 6, 12, 7, 14, 9, 18, 12, 24, 15, 30, 8};
+    vector<int> data7 = {14, 46, 17, 41, 11, 42, 15, 21, 4, 32, 7, 19, 16, 33, 10};
+    vector<int> data8 = {4, 64, 5, 53, 6, 44, 4, 73, 6, 87, 5 ,66, 8, 25, 6, 33, 9, 41, 7};
+    vector<int> data9 = {13, 37, 8, 41, 7, 27, 12, 29, 5, 27, 6, 18, 3, 33, 4, 62, 6};
+    
+    //Initializing processes
+    Process p1("P1", data1);
+    Process p2("P2", data2);
+    Process p3("P3", data3);
+    Process p4("P4", data4);
+    Process p5("P5", data5);
+    Process p6("P6", data6);
+    Process p7("P7", data7);
+    Process p8("P8", data8);
+    Process p9("P9", data9);
+    
+    //Creating vector of Process to build readyQueue
+    vector<Process> transferQueue1 {p1, p2, p3, p4, p5, p6, p7, p8, p9};
+    
+    Queue readyQueue(transferQueue1, "readyQueue");
+    Queue ioQueue("ioQueue");
+    Queue completeQueue("completeQueue");
+    
+    //Start of MLFQ algorithm
+    while (ioQueue.isEmpty()!=1 || readyQueue.isEmpty()!=1)
+    {
+        cout << "Current Time: " << cpuTime << endl;
+        cpuTime = readyQueue.runProcess(cpuTime, ioQueue, completeQueue);
+        ioQueue.checkIOStatus(cpuTime, readyQueue);
+        readyQueue.sortQueue();
+        ioQueue.sortIOQueue();
+        readyQueue.displayReadyQueue();
+        ioQueue.displayIOQueue(cpuTime);
+    }
+
+    //Displaying final output for MLFQ algorithm
+    cout << "Finished" << endl;
+    cout << endl;
+    cout << "Total time: " << cpuTime << endl;
+    cout << endl << "CPU Utlization: " << 100-((float(readyQueue.getIdle()))/(float(cpuTime))*100) << "%" << endl;
+
+    //printing the RT, WT, TT, and Avgs
+    completeQueue.printData();
+    cout << endl << endl;
+
+    return 0;
 }

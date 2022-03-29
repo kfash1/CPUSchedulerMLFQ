@@ -25,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		97B9652D27F3B2000057B903 /* Fash_MLFQ.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fash_MLFQ.txt; sourceTree = "<group>"; };
 		97C3A15E27EDE91A00B5DC7F /* CPUSchedulerMLFQ */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CPUSchedulerMLFQ; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C3A16927EDE9E800B5DC7F /* process.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = process.cpp; sourceTree = "<group>"; };
 		97C3A16A27EDE9E800B5DC7F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 				97C3A16B27EDE9E800B5DC7F /* process.hpp */,
 				97C3A16E27EDE9E800B5DC7F /* queue.cpp */,
 				97C3A16C27EDE9E800B5DC7F /* queue.hpp */,
+				97B9652D27F3B2000057B903 /* Fash_MLFQ.txt */,
 			);
 			name = CPUSchedulerMLFQ;
 			sourceTree = "<group>";
