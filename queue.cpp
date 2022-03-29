@@ -30,7 +30,7 @@ void Queue::displayReadyQueue()
 {
     cout << endl << "*******************************************" << endl << endl;
     cout << "List of processes in the ready queue:" << endl << endl;
-    cout << "Process\t\tBurst\t\tQueue\t\tArrival" << endl;
+    cout << "Process\t\tBurst\t\tQueue\t\tArrival\t\tLastTime" << endl;
 
     //Checking if the ready queue is empty
     if (process.size() == 0)
@@ -42,7 +42,8 @@ void Queue::displayReadyQueue()
     {
         cout << process[i].getName() << "\t\t\t" << process[i].getData(0);
         cout << "\t\t\t" << process[i].getPriorityQueue();
-        cout << "\t\t\t" << process[i].getArrivalTime() << endl;
+        cout << "\t\t\t" << process[i].getArrivalTime();
+        cout << "\t\t\t" << process[i].getLastTime() << endl;
     }
 
     cout << endl << "-------------------------------------------" << endl << endl;
@@ -81,7 +82,7 @@ void Queue::sortQueue()
     {
         for (int j = 0; j < process.size()-i-1; j++)
         {
-            if (process[j].getLastTime() > process[j+1].getLastTime())
+            if (process[j].getLastTime() > process[j+1].getLastTime() && process[j].getArrivalTime() != 0)
             {
                 swap(process[j], process[j+1]);
             }
@@ -172,6 +173,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         {
             cout << "Process on the CPU: " << process[0].getName() << endl;
             cpuTime = cpuTime + processBurst;
+            process[0].setLastTime(cpuTime);
             
             //Checking to see if process is down to its last item, if so
             //deletes the process
@@ -191,7 +193,6 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             }
             else{
                 //process and delete
-                process[0].setLastTime(cpuTime);
                 Process transfer = process[0];
                 completeQueue.addProcess(transfer);
                 popFirstItem();
@@ -203,7 +204,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         {
             cout << "Process on the CPU: " << process[0].getName() << endl;
             cpuTime += 8;
-            
+            process[0].setLastTime(cpuTime);
             //setting new CPU burst since it only got to do 8 units
             process[0].set(0,process[0].getData(0)-8);
             process[0].setPriorityQueue(2);
@@ -288,6 +289,8 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
                 process[0].set(0, preemptTime);
                 cpuTime += (ioQueue.process[processNum].getArrivalTime() - cpuTime);
                 process[0].setArrivalTime(cpuTime);
+                
+                process[0].setLastTime(cpuTime);
                 return cpuTime;
             }
             
@@ -295,7 +298,8 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             
             
             cpuTime += processBurst;
-    
+            process[0].setLastTime(cpuTime);
+            
             //Checking to see if process is down to its last item, if so
             //deletes the process
             if (process[0].processSize() > 1)
@@ -314,7 +318,6 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             }
             else
             {
-                process[0].setLastTime(cpuTime);
                 Process transfer = process[0];
                 completeQueue.addProcess(transfer);
                 popFirstItem();
@@ -357,6 +360,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
                 process[0].set(0, preemptTime);
                 cpuTime += (ioQueue.process[processNum].getArrivalTime() - cpuTime);
                 process[0].setArrivalTime(cpuTime);
+                process[0].setLastTime(cpuTime);
                 return cpuTime;
             }
             
@@ -375,6 +379,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             //cout << "After the process is preempted its new Arrival time is " << newArrivalTime << endl;
             //cout << "Which is the cputime " << cpuTime  << " + " << process[0].getData(0) << endl;
             
+            process[0].setLastTime(cpuTime);
             return cpuTime;
         }
     }
@@ -415,6 +420,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             process[0].set(0, preemptTime);
             cpuTime += (ioQueue.process[processNum].getArrivalTime() - cpuTime);
             process[0].setArrivalTime(cpuTime);
+            process[0].setLastTime(cpuTime);
             return cpuTime;
         }
         
@@ -443,7 +449,7 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         */
         //end of preempt testing
         cpuTime = cpuTime + processBurst;
-
+        process[0].setLastTime(cpuTime);
     
         //Checking to see if process is down to its last item, if so
         //deletes the process
@@ -463,7 +469,6 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         }
         else
         {
-            process[0].setLastTime(cpuTime);
             Process transfer = process[0];
             completeQueue.addProcess(transfer);
             popFirstItem();

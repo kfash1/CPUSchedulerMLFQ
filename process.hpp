@@ -46,7 +46,7 @@ private:
     int processState = 0; //Determines whether process is ready, in I/O
     int totalBurst;
     int firstArrivalTime;
-    int lastTime;
+    int lastTime = 0;
     int priorityQueue = 1;
 };
 
