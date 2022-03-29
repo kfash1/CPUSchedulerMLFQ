@@ -226,7 +226,6 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             {
                 if (ioQueue.process[processNum].getPriorityQueue() == 1 && (ioQueue.process[processNum].getArrivalTime() - cpuTime) < process[0].getData(0))
                 {
-                    cout << "Process on the CPU: " << process[0].getName() << endl;
                     preemptStatus = 1;
                 }
                 else
@@ -284,7 +283,6 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
             {
                 if (ioQueue.process[processNum].getPriorityQueue() == 1 && (ioQueue.process[processNum].getArrivalTime() - cpuTime) < process[0].getData(0))
                 {
-                    cout << "Process on the CPU: " << process[0].getName() << endl;
                     preemptStatus = 1;
                 }
                 else
@@ -331,7 +329,6 @@ int Queue::runProcess(int cpuTime, Queue& ioQueue, Queue& completeQueue)
         {
             if (ioQueue.process[processNum].getPriorityQueue() < 3 && (ioQueue.process[processNum].getArrivalTime() - cpuTime) < process[0].getData(0))
             {
-                cout << "Process on the CPU: " << process[0].getName() << endl;
                 preemptStatus = 1;
             }
             else
